@@ -6,7 +6,7 @@ def solution(turn, l, r):
         if turn == 0: return cards[l]
         else: return 0
 
-    tmp = dp[turn][l][r]
+    tmp = dp[l][r]
     if tmp != -1:
         return tmp
 
@@ -14,7 +14,7 @@ def solution(turn, l, r):
         tmp = min(solution(turn ^ 1, l + 1, r), solution(turn ^ 1, l, r - 1))
     else:
         tmp = max(solution(turn ^ 1, l + 1, r) + cards[l], solution(turn ^ 1, l, r - 1) + cards[r])
-    
+    dp[l][r] = tmp
     return tmp
 
 
@@ -25,7 +25,6 @@ for _ in range(T):
     N = int(sys.stdin.readline())
     cards = list(map(int, sys.stdin.readline().split(' ')))
 
-    dp = [[[-1 for _ in range(N)] for _ in range(N)] for _ in range(2)]
+    dp = [[-1 for _ in range(N)] for _ in range(N)]
     print(solution(0, 0, N - 1))
-
-    print("done")
+    print()
